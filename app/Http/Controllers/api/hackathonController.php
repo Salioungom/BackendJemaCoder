@@ -43,8 +43,10 @@ class hackathonController extends Controller
             $hackathon->logo_url = $imageName;
             $hackathon->theme = $request->theme;
             $hackathon->prix = $request->prix;
-            $hackathon->tag_id=$request->tag_id;
-            $tag = tag::find($request->tag_id);
+            $hackathon->status=$request->status;
+            $hackathon->countNbrParticipant=$request->countNbrParticipant;
+            // $hackathon->tag_id=$request->tag_id;
+            // $tag = tag::find($request->tag_id);
             $hackathon->organisateur_id = auth()->check() ? auth()->user()->id : null;
 
             if ($hackathon->organisateur_id === null) {
@@ -59,7 +61,7 @@ class hackathonController extends Controller
                 'status_code' => 200,
                 'status_message' => 'Hackathon ajouté avec succès',
                 'Hackathon' => $hackathon,
-                'tag'=>$tag ? $tag->name : null,
+                // 'tag'=>$tag ? $tag->name : null,
             ]);
         } catch (Exception $e) {
             return response()->json([

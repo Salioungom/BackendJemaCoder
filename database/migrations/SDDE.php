@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('defis', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('titre');
             $table->text('description')->nullable();
-            $table->string('file')->nullable();
+            $table->string('ressource')->nullable();
             $table->string('critere')->nullable();
             $table->unsignedBigInteger('hackathon_id');
             $table->foreign('hackathon_id')->references('id')->on('hackathons')->onDelete('cascade');

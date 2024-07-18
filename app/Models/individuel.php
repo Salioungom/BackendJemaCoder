@@ -12,4 +12,7 @@ class individuel extends Model
     public function participant(){
         return $this->belongsTo(participant::class);
     }
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

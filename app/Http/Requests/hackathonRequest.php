@@ -31,11 +31,12 @@ class hackathonRequest extends FormRequest
             'date_fin' => 'required',
             'lieu' => 'required',
             'logo_url'=>'nullable',
-            'tag_id'=>'required',
+            'tag_id'=>'nullable',
+            'countNbrParticipant'=>'nullable',
+
 
         ];
     }
-
     public function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
@@ -55,7 +56,7 @@ class hackathonRequest extends FormRequest
             'date_debut.required' => 'La date de début est obligatoire',
             'date_fin.required' => 'La date de fin est obligatoire',
             'lieu.required' => 'Le lieu est obligatoire',
-            'tag_id'=>'le tag est requier',
+
         ];
     }
 }

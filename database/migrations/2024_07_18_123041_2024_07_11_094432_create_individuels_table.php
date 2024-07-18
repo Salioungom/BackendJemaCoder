@@ -6,17 +6,16 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('individuels', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_simple_id');
-            $table->foreign('user_simple_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('participant_id');
             $table->timestamps();
-        });
+            $table->foreign('participant_id')->references('id')->on('participants')->onDelete('cascade');
+            $table->foreign('user_simple_id')->references('id')->on('users')->onDelete('cascade');
+        }); 
     }
 
     /**

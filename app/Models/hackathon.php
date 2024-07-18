@@ -21,6 +21,9 @@ class hackathon extends Model
     public function defis(){
         return $this->hasMany(defis::class);
     }
+    public function feedback(){
+        return $this->hasMany(feedback::class);
+    }
 
     // public function Analyse(){
     //     return $this->hasMany(Analyse::class);

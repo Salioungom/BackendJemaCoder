@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\loginRequest;
 use App\Http\Requests\RegisterUser;
+use App\Models\defis;
+use App\Models\hackathon;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -14,13 +16,6 @@ class UserController extends Controller
     public function register(RegisterUser $request)
     {
         try {
-            // $imageName = null;
-            // if ($request->hasFile('photo')) {
-            //     $imageName = Str::random(32) . "." . $request->photo->getClientOriginalExtension();
-            //     Storage::disk('public_storage')->put($imageName, file_get_contents($request->photo));
-            // }
-
-            // Create new user
             $user = new User();
             $user->firstname = $request->firstname;
             $user->lastname = $request->lastname;
@@ -89,6 +84,8 @@ class UserController extends Controller
             ], 401);
         }
     }
+
+
 
 
 }

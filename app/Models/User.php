@@ -50,6 +50,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(MembreEquipe::class);
     }
+    public function individuel()
+    {
+        return $this->belongsTo(individuel::class);
+    }
     public function evaluation(){
         return $this->hasMany(Evaluations::class);
 

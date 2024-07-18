@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('soumissions', function (Blueprint $table) {
+        Schema::create('defis', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('participant_id'); // Déclarez la colonne participant_id ici
-            $table->foreign('participant_id')->references('id')->on('participants')->onDelete('cascade'); // Ajoutez la clé étrangère ici
+            $table->string('titre');
             $table->text('description')->nullable();
-            $table->string('lien_demo')->nullable();
-            $table->string('fichier_supplementaire')->nullable();
+            $table->string('ressource')->nullable();
+            $table->string('critere')->nullable();
+            $table->unsignedBigInteger('hackathon_id');
+            $table->foreign('hackathon_id')->references('id')->on('hackathons')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('soumissions');
+        Schema::dropIfExists('defis');
     }
 };

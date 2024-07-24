@@ -14,9 +14,13 @@ return new class extends Migration
         Schema::create('equipes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedBigInteger('participant_id');
-            $table->foreign('participant_id')->references('id')->on('participants')->onDelete('cascade');
+            $table->unsignedBigInteger('hackaton_id');
+            $table->enum('status', ['en attente', 'accepté', 'refusé']);
+            $table->integer('Nbre_membre')->nullable();
             $table->timestamps();
+
+            // Clé étrangère
+            $table->foreign('hackaton_id')->references('id')->on('hackathons')->onDelete('cascade');
         });
     }
 

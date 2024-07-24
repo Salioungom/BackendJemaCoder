@@ -22,7 +22,6 @@ class CheckRole
         if (Auth::check() && Auth::user()->role == "organisateur") {
             return $next($request);
         }
-
         // Si l'utilisateur n'a pas le rôle requis, renvoyer une réponse d'erreur
         return response()->json(['error' => 'cet utilisateur n\'a pas l\'autorisation de créer un hackathon'], 403);
     }

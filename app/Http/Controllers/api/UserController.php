@@ -25,7 +25,7 @@ class UserController extends Controller
             $user->password = bcrypt($request->password);
             $user->metier = $request->metier;
             if (!in_array($request->role, ['organisateur', 'participant', 'jury'])) {
-                throw new \Exception('Le rôle spécifié n\'est pas valide.');
+                throw new Exception('Le rôle spécifié n\'est pas valide.');
             }
             $user->role = $request->role;
             $user->save();

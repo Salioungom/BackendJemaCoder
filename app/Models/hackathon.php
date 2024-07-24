@@ -12,17 +12,21 @@ class hackathon extends Model
     public function users(){
         return $this->belongsTo(User::class);
     }
-    public function participant(){
-        return $this->hasMany(participant::class);
+    public function equipe(){
+        return $this->hasMany(equipe::class, 'equipe_id');
+    }
+    
+    public function individuel(){
+        return $this->hasMany(individuel::class, 'id');
     }
     public function tag(){
         return $this->hasMany(tag::class);
     }
     public function defis(){
-        return $this->hasMany(defis::class);
+        return $this->hasMany(defis::class, 'id');
     }
     public function feedback(){
-        return $this->hasMany(feedback::class);
+        return $this->hasMany(feedback::class,'id');
     }
 
     // public function Analyse(){

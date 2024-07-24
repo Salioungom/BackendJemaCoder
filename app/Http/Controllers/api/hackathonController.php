@@ -10,6 +10,7 @@ use App\Models\hackathon;
 use App\Models\tag;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class hackathonController extends Controller
 {
@@ -32,7 +33,6 @@ class hackathonController extends Controller
                 $imageName = Str::random(5) . "." . $request->logo_url->getClientOriginalExtension();
                 Storage::disk('public_storage')->put($imageName, file_get_contents($request->logo_url));
             }
-
             $hackathon = new Hackathon();
             $hackathon->name = $request->name;
             $hackathon->structure_organisateur = $request->structure_organisateur;
@@ -54,7 +54,36 @@ class hackathonController extends Controller
                     'message' => 'Utilisateur non authentifié',
                 ], 401);
             }
-
+    
+            if (Carbon::parse($hackathon->date_debut)->gte(Carbon::parse($hackathon->date_fin))) {
+                return response()->json([
+                    'message' => 'La date de fin doit être supérieure à la date de début',
+                ], 400);
+            }
+    
+            if (Carbon::parse($hackathon->date_debut)->lte(Carbon::now())) {
+                return response()->json([
+                    'message' => 'La date de début doit être supérieure à la date actuelle',
+                ], 400);
+            }
+    
+            if (Carbon::parse($hackathon->date_fin)->lte(Carbon::now())) {
+                return response()->json([
+                    'message' => 'La date de fin doit être supérieure à la date actuelle',
+                ], 400);
+            }
+            
+            if (Carbon::parse($hackathon->date_fin)->eq(Carbon::now())) {
+                $hackathon->status = 'inscriptions férmées';
+                return response()->json([
+                    'status' => $hackathon->status,
+                ], 400);
+            }
+            if ($hackathon->prix <= 0) {
+                return response()->json([
+                    'message' => 'Le prix doit être supérieur à 0',
+                ], 400);
+            }
             $hackathon->save();
 
             return response()->json([

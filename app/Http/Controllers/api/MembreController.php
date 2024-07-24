@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
-use App\Models\defis;
-use App\Models\hackathon;
-
+use App\Models\Defis;
+use App\Models\Hackathon;
 
 class DefisController extends Controller
 {
-    public function store(Request $request){
+    public function store(Request $request)
+    {
+        // Validation des données de la requête
         $validatedData = $request->validate([
             'titre' => 'required|string|max:255',
             'description' => 'required|string',
@@ -28,9 +29,12 @@ class DefisController extends Controller
                     'message' => 'Hackathon non trouvé',
                 ], 404);
             }
-            if($hackathon->organisateur_id != auth()->user()->id){
+
+            // Vérification que l'utilisateur authentifié est l'organisateur du hackathon
+            $user = auth()->user();
+            if ($user->role !== 'organisateur' || $user->id !== $hackathon->user_id) {
                 return response()->json([
-                    'message' => 'Vous n\'avez pas le droit de créer un défi pour ce hackathon parceque vous n\'êtes pas l\'organisateur',
+                    'message' => 'Vous n\'êtes pas autorisé à créer des défis pour ce hackathon',
                 ], 403);
             }
 
@@ -54,6 +58,5 @@ class DefisController extends Controller
                 'error' => $e->getMessage(),
             ], 500);
         }
-        }
-
+    }
 }

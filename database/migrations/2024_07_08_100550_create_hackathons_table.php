@@ -28,7 +28,6 @@ return new class extends Migration
             $table->foreign('organisateur_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('tag_id')->nullable();
             $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
-
             $table->timestamps();
         });
     }

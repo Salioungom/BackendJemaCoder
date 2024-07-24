@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\hackathon;
 use App\Models\participant;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ParticipantController extends Controller
@@ -21,6 +22,24 @@ public function store(Request $request)
             return response()->json([
                 'message' => 'Hackathon non trouvé',
             ], 404);
+        }
+        if ($hackathon->status != 'inscriptions ouvert') {
+            return response()->json([
+                'message' => 'Hackathon non disponible',
+            ], 404);
+        }
+        if (Carbon::parse($hackathon->date_fin)->eq(Carbon::now())) {
+            $hackathon->status = 'inscriptions férmées';
+            return response()->json([
+                'status' => $hackathon->status,
+            ], 400);
+        }
+        
+
+        if($hackathon->organisateur_id = auth()->user()->id){
+            return response()->json([
+                'message' => 'en tant que l\'organisateur, vous ne pouvez pas vous inscrire à votre propre hackathon',
+            ], 403);
         }
         // dd($hackathon);
         $participant = new Participant();

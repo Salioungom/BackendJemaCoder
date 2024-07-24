@@ -13,12 +13,15 @@ return new class extends Migration
     {
         Schema::create('soumissions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('participant_id'); // Déclarez la colonne participant_id ici
-            $table->foreign('participant_id')->references('id')->on('participants')->onDelete('cascade'); // Ajoutez la clé étrangère ici
+            $table->enum('id_type', ['aquipe', 'individuel']);
+            $table->unsignedBigInteger('equipe_id')->nullable();
+            $table->unsignedBigInteger('individuel_id')->nullable();
             $table->text('description')->nullable();
             $table->string('lien_demo')->nullable();
             $table->string('fichier_supplementaire')->nullable();
             $table->timestamps();
+            $table->foreign('equipe_id')->references('id')->on('equipes')->onDelete('cascade');
+            $table->foreign('individuel_id')->references('id')->on('individuels')->onDelete('cascade');
         });
     }
 

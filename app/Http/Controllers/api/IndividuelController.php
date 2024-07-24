@@ -19,8 +19,16 @@ class IndividuelController extends Controller
                 return response()->json(['message' => 'Utilisateur non authentifié'], 401);
             }
             $indiv = new Individuel();
+            
+            $user = auth()->user();
+            // Vérifier le rôle de l'utilisateur
+            if ($user->role !== 'participant') {
+                return response()->json([
+                    'message' => 'Vous n\'êtes pas autorisé à rejoindre un hackathon',
+                ], 403);
+            }
             // Récupérez l'ID de l'utilisateur connecté
-            $indiv->user_simple_id = auth()->user()->id;
+            $indiv->user_simple_id =$user->id;
 
             // Vérifiez si le participant existe
             $participant = Participant::find($request->participant_id);

@@ -48,6 +48,11 @@ class FeedbackController extends Controller
             'message' => 'Hackathon non trouvé',
         ], 404);
     }
+    if($hackathon->organisateur_id = auth()->user()->id){
+        return response()->json([
+            'message' => 'Vous ne pouvez pas ajouter un feedback à votre propre hackathon',
+        ], 403);
+    }
     $feedback=new Feedback();
     $feedback->hackathon_id=$request->hackathon_id;
     $feedback->messagefeedback=$request->messagefeedback;

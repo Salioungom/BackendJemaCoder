@@ -9,10 +9,13 @@ class individuel extends Model
 {
     use HasFactory;
     protected $guarder=[];
-    public function participant(){
-        return $this->belongsTo(participant::class);
+    public function hackathon(){
+        return $this->belongsTo(hackathon::class,'id');
+    }
+    public function soumission(){
+        return $this->hasMany(Soumissions::class, 'id');
     }
     public function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'id');
     }
 }

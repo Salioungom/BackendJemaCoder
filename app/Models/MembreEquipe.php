@@ -10,7 +10,12 @@ class MembreEquipe extends Model
     use HasFactory;
     protected $guarded=[];
     public function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'id');
+    }
+
+    public function equipe()
+    {
+        return $this->belongsTo(equipe::class, 'equipe_id');
     }
 
 }
